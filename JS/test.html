@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Character set and responsive viewport -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+
+  <style>
+    /* ================= GENERAL STYLES ================= */
+    body {
+      margin: 0; /* remove default browser margin */
+      font-family: Arial, sans-serif; /* set font for the page */
+      scroll-behavior: smooth; /* smooth scroll when clicking nav links */
+      background: #f9f9f9; /* light page background */
+    }
+
+    /* ================= HEADINGS AND PARAGRAPHS ================= */
+    h1, h2, h4, p {
+      margin: 0 0 10px 0; /* bottom margin for spacing */
+      text-align: center; /* center all headings and paragraphs by default */
+    }
+
+    /* ================= HEADER / NAVIGATION ================= */
+    header {
+      background: #111; /* dark background for header */
+      padding: 20px; /* spacing inside header */
+      position: fixed; /* fixed at top while scrolling */
+      width: 100%; /* full width header */
+      top: 0; /* align to top */
+      z-index: 1000; /* ensure header is above other elements */
+    }
+
+    header nav {
+      display: flex; /* flex layout for navigation links */
+      justify-content: center; /* center links horizontally */
+      gap: 20px; /* space between links */
+    }
+
+    header nav a {
+      color: #fff; /* white text */
+      text-decoration: none; /* remove underline */
+      font-size: 1rem; /* standard font size */
+    }
+
+    /* ================= SECTIONS ================= */
+    section {
+      padding: 120px 20px 80px 20px; /* top padding accounts for fixed header */
+      min-height: 100vh; /* each section takes at least full viewport height */
+    }
+
+    /* ---------------- HOME SECTION ---------------- */
+    .home {
+      background: #222; /* dark background for home */
+      color: #fff; /* white text */
+      display: flex; /* flex layout */
+      flex-direction: column; /* stack vertically */
+      align-items: center; /* center horizontally */
+      justify-content: center; /* center vertically */
+      text-align: center; /* center text */
+    }
+
+    /* ---------------- SKILLS SECTION ---------------- */
+    .skills, .projects, .testimonials {
+      background: #f3f3f3; /* light gray background for sections */
+    }
+
+    .skills ul {
+      list-style: none; /* remove bullets */
+      padding: 0; /* remove padding */
+      display: flex; /* flex layout for skills */
+      flex-wrap: wrap; /* wrap to next line if needed */
+      justify-content: center; /* center skills horizontally */
+      gap: 15px; /* space between skill items */
+    }
+
+    .skills li {
+      background: #00bcd4; /* teal background */
+      color: #fff; /* white text */
+      padding: 10px 20px; /* inner spacing */
+      border-radius: 5px; /* rounded corners */
+    }
+
+    /* ---------------- PROJECTS SECTION ---------------- */
+    .projects p {
+      text-align: center; /* center project text */
+    }
+
+    /* ---------------- CALL-TO-ACTION SECTION ---------------- */
+    .cta {
+      background: #444; /* dark background */
+      color: #fff; /* white text */
+      text-align: center; /* center all text */
+      padding: 80px 20px; /* spacing inside section */
+    }
+
+    .cta button {
+      padding: 15px 30px; /* button padding */
+      background: #00bcd4; /* teal button background */
+      color: #fff; /* white text */
+      border: none; /* remove border */
+      border-radius: 5px; /* rounded corners */
+      cursor: pointer; /* pointer cursor on hover */
+      font-size: 1rem; /* font size */
+      transition: background 0.3s; /* smooth hover effect */
+    }
+
+    .cta button:hover {
+      background: #0097a7; /* darker teal on hover */
+    }
+
+    /* ================= TESTIMONIAL SLIDER ================= */
+    .testimonial-slider {
+      position: relative; /* relative for absolute positioning of cards and buttons */
+      max-width: 500px; /* max width of slider */
+      margin: 40px auto 0 auto; /* center horizontally with margin */
+      overflow: hidden; /* hide overflowing content */
+    }
+
+    .testimonial-card {
+      position: absolute; /* stack all cards on top of each other */
+      width: 100%; /* full width */
+      opacity: 0; /* hide initially */
+      background: #fff; /* white card */
+      padding: 20px; /* spacing inside card */
+      border-radius: 8px; /* rounded corners */
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* subtle shadow */
+      transition: opacity 1s ease-in-out; /* smooth fade effect */
+    }
+
+    .testimonial-card.active {
+      opacity: 1; /* show active card */
+      position: relative; /* bring card into normal flow */
+    }
+
+    /* ================= MODERN NAVIGATION BUTTONS ================= */
+    .slider-btn {
+      position: absolute; /* position over the slider */
+      top: 50%; /* vertical center */
+      transform: translateY(-50%); /* perfectly center vertically */
+      background: rgba(0, 188, 212, 0.8); /* semi-transparent teal */
+      color: #fff; /* white icon */
+      border: none; /* no border */
+      font-size: 1.5rem; /* bigger arrow */
+      width: 40px; /* fixed width */
+      height: 40px; /* fixed height */
+      display: flex; /* center arrow inside */
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%; /* circle shape */
+      cursor: pointer; /* pointer on hover */
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* subtle shadow */
+      transition: background 0.3s, transform 0.3s; /* smooth hover effect */
+      z-index: 20; /* above cards */
+    }
+
+    #prev { left: 10px; } /* left inside slider */
+    #next { right: 10px; } /* right inside slider */
+
+    .slider-btn:hover {
+      background: #00bcd4; /* solid teal on hover */
+      transform: translateY(-50%) scale(1.1); /* slightly bigger on hover */
+    }
+
+    /* ================= FORM STYLING ================= */
+    form {
+      display: flex; /* flex layout */
+      flex-direction: column; /* stack fields vertically */
+      gap: 10px; /* spacing between fields */
+      max-width: 400px; /* max width */
+      margin: 0 auto; /* center horizontally */
+    }
+
+    input, textarea {
+      padding: 10px; /* spacing inside input */
+      border-radius: 5px; /* rounded corners */
+      border: 1px solid #ccc; /* light border */
+      width: 100%; /* full width */
+      font-size: 1rem; /* font size */
+    }
+
+    button.submit-btn {
+      padding: 10px; /* button padding */
+      background: #00bcd4; /* teal background */
+      color: #fff; /* white text */
+      border: none; /* remove border */
+      border-radius: 5px; /* rounded corners */
+      cursor: pointer; /* pointer cursor */
+    }
+
+    button.submit-btn:hover {
+      background: #0097a7; /* darker teal on hover */
+    }
+
+    /* ================= FOOTER ================= */
+    footer {
+      background: #111; /* dark background */
+      color: #fff; /* white text */
+      padding: 20px; /* spacing */
+      text-align: center; /* center text */
+    }
+
+    /* ================= ANCHOR OFFSET FOR FIXED HEADER ================= */
+    :target::before {
+      content: ""; /* empty content */
+      display: block; /* act as a block */
+      height: 100px; /* same height as header */
+      margin-top: -100px; /* negative offset so content shows below header */
+      visibility: hidden; /* invisible */
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ================= HEADER / NAVIGATION ================= -->
+  <header>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#cta">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ================= HOME SECTION ================= -->
+  <section id="home" class="home">
+    <h1>Welcome to My Portfolio</h1>
+    <p>Frontend Developer in training!</p>
+  </section>
+
+  <!-- ================= ABOUT SECTION ================= -->
+  <section id="about" class="about">
+    <h2>About Me</h2>
+    <p>Hello! I'm learning frontend development and building cool projects.</p>
+  </section>
+
+  <!-- ================= SKILLS SECTION ================= -->
+  <section id="skills" class="skills">
+    <h2>Skills</h2>
+    <ul>
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+      <li>Node.js</li>
+      <li>React</li>
+    </ul>
+  </section>
+
+  <!-- ================= PROJECTS SECTION ================= -->
+  <section id="projects" class="projects">
+    <h2>Projects</h2>
+    <p>Project samples will be added soon.</p>
+  </section>
+
+  <!-- ================= TESTIMONIALS SECTION ================= -->
+  <section id="testimonials" class="testimonials">
+    <h2>Testimonials</h2>
+
+    <div class="testimonial-slider">
+      <div class="testimonial-card active">
+        <p>"Galing tang ina."</p>
+        <h4>- Anonymous</h4>
+      </div>
+
+      <div class="testimonial-card">
+        <p>"I learned so much from this portfolio. Highly recommend!"</p>
+        <h4>- Jane Smith</h4>
+      </div>
+
+      <div class="testimonial-card">
+        <p>"Great design and very user-friendly."</p>
+        <h4>- Michael Lee</h4>
+      </div>
+
+      <!-- MODERN NAVIGATION BUTTONS -->
+      <button id="prev" class="slider-btn">‹</button>
+      <button id="next" class="slider-btn">›</button>
+    </div>
+  </section>
+
+  <!-- ================= CALL-TO-ACTION / CONTACT FORM ================= -->
+  <section id="cta" class="cta">
+    <h2>Work With Me</h2>
+    <p>Ready to build something cool? Contact me!</p>
+
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" rows="5" required></textarea>
+      <button class="submit-btn" type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <p>&copy; 2025 My Portfolio. All rights reserved.</p>
+  </footer>
+
+  <!-- ================= JAVASCRIPT FOR TESTIMONIAL SLIDER ================= -->
+  <script>
+    const cards = document.querySelectorAll('.testimonial-card');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    let current = 0;
+
+    function showCard(index) {
+      cards.forEach(card => card.classList.remove('active'));
+      cards[index].classList.add('active');
+    }
+
+    function nextSlide() {
+      current = (current + 1) % cards.length;
+      showCard(current);
+    }
+
+    function prevSlide() {
+      current = (current - 1 + cards.length) % cards.length;
+      showCard(current);
+    }
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    setInterval(nextSlide, 5000); // auto slide every 5 seconds
+
+    showCard(current); // show first card initially
+  </script>
+
+</body>
+</html>
